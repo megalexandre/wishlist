@@ -16,7 +16,14 @@ repositories {
 }
 
 dependencies {
+
+	// Open Api
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+	// CORE
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

@@ -1,8 +1,7 @@
 package wishlist.domain.service;
 
-import java.util.*;
-import wishlist.domain.*;
-import wishlist.resouce.*;
+import java.util.List;
+import wishlist.domain.entity.Wishlist;
 
 public interface WishlistService{
 

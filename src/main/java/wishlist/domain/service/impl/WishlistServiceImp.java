@@ -1,16 +1,17 @@
 package wishlist.domain.service.impl;
 
-import java.util.*;
-import org.springframework.beans.factory.annotation.*;
-import wishlist.domain.*;
-import wishlist.domain.service.*;
-import wishlist.resouce.*;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import wishlist.domain.entity.Wishlist;
+import wishlist.domain.service.WishlistService;
+import wishlist.resouce.WishlistRepository;
 
-public class WishlistServiceImp implements WishlistService{
+@Service
+public class WishlistServiceImp implements WishlistService {
 
-    WishlistRepository wishlistRepository;
+    private final WishlistRepository wishlistRepository;
 
-    public WishlistServiceImp(@Autowired WishlistRepository wishlistRepository) {
+    public WishlistServiceImp(WishlistRepository wishlistRepository) {
         this.wishlistRepository = wishlistRepository;
     }
 
@@ -30,8 +31,8 @@ public class WishlistServiceImp implements WishlistService{
     }
 
     @Override
-    public Boolean clientHasItem(String client, String uuid) {
-        return wishlistRepository.clientHasItem(client, uuid);
+    public Boolean clientHasItem(String clientId, String productId) {
+        return wishlistRepository.clientHasItem(clientId, productId);
     }
 
 }

@@ -1,7 +1,7 @@
 package wishlist.resouce;
 
-import java.util.*;
-import wishlist.domain.*;
+import java.util.List;
+import wishlist.domain.entity.Wishlist;
 
 public interface WishlistRepository {
 
