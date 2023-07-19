@@ -8,5 +8,4 @@ public class WishlistResponse {
         this.name = name;
     }
 
-
 }

@@ -1,13 +1,15 @@
 package wishlist.domain.service;
 
-import java.util.List;
+import java.util.Collection;
+import wishlist.application.request.ListCustomerWishlistRequest;
+import wishlist.domain.entity.Product;
 import wishlist.domain.entity.Wishlist;
 
-public interface WishlistService{
+public interface WishlistService {
 
+    Collection<Product> list(ListCustomerWishlistRequest listCustomerWishlistRequest);
     void save(Wishlist wishlist);
-    void remove(String uuid);
-    List<Wishlist> listAll(String clientId);
-    Boolean clientHasItem(String client, String Id);
+    Boolean remove(Wishlist wishlist);
+    Boolean searchProductInCustomerWishlist(Wishlist wishlist);
 
 }

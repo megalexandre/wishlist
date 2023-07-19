@@ -21,14 +21,16 @@ class WishlistServiceImpTest {
     @Mock
     private WishlistRepository wishlistRepository;
 
+    @Test
+    void remove() {
+    }
+
+
     /*
     @Test
     void save() {
     }
 
-    @Test
-    void remove() {
-    }
 
     @Test
     void listAll() {
@@ -51,6 +53,7 @@ class WishlistServiceImpTest {
         var productId = UUID.randomUUID().toString();
 
         when(wishlistRepository.clientHasItem(clientId, productId )).thenReturn(false);
+
         wishlistService.clientHasItem(clientId, productId);
     }
 

@@ -2,6 +2,7 @@ package wishlist.domain.service.impl;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import wishlist.application.request.ListCustomerWishlistRequest;
 import wishlist.domain.entity.Wishlist;
 import wishlist.domain.service.WishlistService;
 import wishlist.resouce.WishlistRepository;
@@ -21,12 +22,12 @@ public class WishlistServiceImp implements WishlistService {
     }
 
     @Override
-    public void remove(String uuid) {
-        wishlistRepository.remove(uuid);
+    public Boolean remove(String uuid) {
+        return wishlistRepository.remove(uuid);
     }
 
     @Override
-    public List<Wishlist> listAll(String uuid) {
+    public List<Wishlist> listAll(ListCustomerWishlistRequest listCustomerWishlistRequest) {
         return wishlistRepository.listAll(uuid);
     }
 

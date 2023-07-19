@@ -14,8 +14,8 @@ public class WishlistRepositoryImp implements WishlistRepository {
     }
 
     @Override
-    public void remove(String uuid) {
-
+    public Boolean remove(String uuid) {
+        return true;
     }
 
     @Override
