@@ -2,31 +2,30 @@ package wishlist.application.request;
 
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
-import wishlist.domain.entity.Customer;
 import wishlist.domain.entity.Wishlist;
 
 @Validated
 public class ListCustomerWishlistRequest {
 
     @NotNull
-    private String customerId;
+    private String customer;
 
-    public ListCustomerWishlistRequest(String customerId) {
-        this.customerId = customerId;
+    public ListCustomerWishlistRequest(String customer) {
+        this.customer = customer;
     }
 
     public Wishlist toWishlist() {
         return Wishlist.builder()
-            .customer(new Customer(customerId))
+            .customer(customer)
             .build();
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public String customer() {
+        return customer;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
 }

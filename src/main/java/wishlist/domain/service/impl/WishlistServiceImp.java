@@ -1,11 +1,11 @@
 package wishlist.domain.service.impl;
 
-import java.util.List;
+import java.util.Collection;
 import org.springframework.stereotype.Service;
 import wishlist.application.request.ListCustomerWishlistRequest;
 import wishlist.domain.entity.Wishlist;
 import wishlist.domain.service.WishlistService;
-import wishlist.resouce.WishlistRepository;
+import wishlist.resouce.repository.WishlistRepository;
 
 @Service
 public class WishlistServiceImp implements WishlistService {
@@ -17,23 +17,23 @@ public class WishlistServiceImp implements WishlistService {
     }
 
     @Override
-    public void save(Wishlist wishlist) {
-        wishlistRepository.save(wishlist);
+    public Collection<String> list(ListCustomerWishlistRequest listCustomerWishlistRequest) {
+        return null;
     }
 
     @Override
-    public Boolean remove(String uuid) {
-        return wishlistRepository.remove(uuid);
+    public Wishlist addProductToCustomerWishlistRequest(Wishlist wishlist) {
+        return wishlistRepository.save(wishlist);
     }
 
     @Override
-    public List<Wishlist> listAll(ListCustomerWishlistRequest listCustomerWishlistRequest) {
-        return wishlistRepository.listAll(uuid);
+    public Boolean remove(Wishlist wishlist) {
+        return null;
     }
 
     @Override
-    public Boolean clientHasItem(String clientId, String productId) {
-        return wishlistRepository.clientHasItem(clientId, productId);
+    public Boolean searchProductInCustomerWishlist(Wishlist wishlist) {
+        return null;
     }
 
 }

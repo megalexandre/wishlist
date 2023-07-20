@@ -3,36 +3,34 @@ package wishlist.application.request;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
-import wishlist.domain.entity.Customer;
-import wishlist.domain.entity.Product;
 import wishlist.domain.entity.Wishlist;
 
 @Validated
 public class AddProductToCustomerWishlistRequest {
 
     @NotNull
-    private String productId;
+    private String product;
 
     @NotNull
-    private String customerId;
+    private String customer;
 
-    public AddProductToCustomerWishlistRequest(String productId, String customerId) {
-        this.productId = productId;
-        this.customerId = customerId;
+    public AddProductToCustomerWishlistRequest(String product, String customer) {
+        this.product = product;
+        this.customer = customer;
     }
 
     public Wishlist toWishlist() {
         return Wishlist.builder()
-            .products(List.of(new Product(productId)))
-            .customer(new Customer(customerId))
+            .products(List.of(product))
+            .customer(customer)
             .build();
     }
 
-    public String getProductId() {
-        return productId;
+    public String getProduct() {
+        return product;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public String getCustomer() {
+        return customer;
     }
 }

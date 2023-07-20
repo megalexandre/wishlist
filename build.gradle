@@ -24,6 +24,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.projectlombok:lombok:1.18.22'
 
+	// database
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
 	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

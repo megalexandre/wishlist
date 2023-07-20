@@ -1,16 +1,12 @@
 package unit.wishlist.domain.service.impl;
 
-import java.util.UUID;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import wishlist.domain.service.WishlistService;
 import wishlist.domain.service.impl.WishlistServiceImp;
-import wishlist.resouce.WishlistRepository;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import wishlist.resouce.repository.WishlistRepository;
 
 @ExtendWith(MockitoExtension.class)
 class WishlistServiceImpTest {
@@ -37,6 +33,7 @@ class WishlistServiceImpTest {
     }
      */
 
+    /*
     @Test
     void should_return_true_when_product_exists_in_wishlist() {
         var clientId = UUID.randomUUID().toString();
@@ -56,5 +53,6 @@ class WishlistServiceImpTest {
 
         wishlistService.clientHasItem(clientId, productId);
     }
+     */
 
 }

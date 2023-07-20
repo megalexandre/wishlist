@@ -5,10 +5,10 @@ import java.util.Collection;
 public class Wishlist {
 
     private String id;
-    private Customer customer;
-    private Collection<Product> products;
+    private String customer;
+    private Collection<String> products;
 
-    public Wishlist(String id, Customer customer, Collection<Product> products) {
+    public Wishlist(String id, String customer, Collection<String> products) {
         this.id = id;
         this.customer = customer;
         this.products = products;
@@ -20,8 +20,8 @@ public class Wishlist {
 
     public static class WishlistBuilder {
         private String id;
-        private Customer customer;
-        private Collection<Product> products;
+        private String customer;
+        private Collection<String> products;
 
         WishlistBuilder() {
         }
@@ -31,12 +31,12 @@ public class Wishlist {
             return this;
         }
 
-        public WishlistBuilder customer(Customer customer) {
+        public WishlistBuilder customer(String customer) {
             this.customer = customer;
             return this;
         }
 
-        public WishlistBuilder products ( Collection<Product> products) {
+        public WishlistBuilder products (Collection<String> products) {
             this.products = products;
             return this;
         }
@@ -46,27 +46,4 @@ public class Wishlist {
         }
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Collection<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Collection<Product> products) {
-        this.products = products;
-    }
 }
