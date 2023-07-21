@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
-import wishlist.resouce.repository.WishlistRepository;
+import wishlist.domain.repositoy.WishlistRepository;
 
 @Service
 public class SaveWishlistUseCase implements UseCase<Wishlist, Wishlist>{

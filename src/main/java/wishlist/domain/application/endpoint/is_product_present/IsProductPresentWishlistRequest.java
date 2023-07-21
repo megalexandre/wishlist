@@ -1,34 +1,29 @@
-package wishlist.application.endpoints.addwishlist;
+package wishlist.domain.application.endpoint.is_product_present;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import wishlist.domain.entity.CommonWishlist;
-import wishlist.domain.entity.Wishlist;
 
 @Validated
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
-public class AddWishlistRequest {
+public class IsProductPresentWishlistRequest {
 
     @NotEmpty
     @NotNull
+    @Getter
     private String product;
 
     @NotEmpty
     @NotNull
+    @Getter
     private String customer;
 
-    public Wishlist toWishlist() {
-        return new CommonWishlist.Builder()
-                .setCustomer(customer)
-                .setProducts(List.of(product))
-                .build();
+    public IsProductPresentWishlistRequest(String product, String customer) {
+        this.product = product;
+        this.customer = customer;
     }
 
     public String getProduct() {

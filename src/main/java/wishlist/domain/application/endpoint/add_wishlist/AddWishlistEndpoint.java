@@ -1,4 +1,4 @@
-package wishlist.application.endpoints.addwishlist;
+package wishlist.domain.application.endpoint.add_wishlist;
 
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wishlist.application.response.WishlistResponse;
 import wishlist.domain.usecases.SaveWishlistUseCase;
+import wishlist.domain.application.presenter.addwishlist.AddWishListPresenter;
+import wishlist.domain.application.presenter.addwishlist.AddWishlistPresenterResponse;
 
 @RestController
 @RequestMapping("wishlist")
@@ -23,9 +24,9 @@ public class AddWishlistEndpoint {
     }
 
     @PostMapping
-    public ResponseEntity<WishlistResponse> execute(@RequestBody @Valid AddWishlistRequest request){
+    public ResponseEntity<AddWishListPresenter> execute(@RequestBody @Valid AddWishlistRequest request){
         logger.info("Adding product: {} to customer: {}.", request.getCustomer(), request.getProduct());
-        return ResponseEntity.ok().body(new WishlistResponse(useCase.execute(request.toWishlist())));
+        return ResponseEntity.ok(AddWishlistPresenterResponse.fromWishList(useCase.execute(request.toWishlist())));
     }
 
 }

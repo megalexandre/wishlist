@@ -1,4 +1,4 @@
-package wishlist.application.endpoints.isProductPresentWishlistCustomer;
+package wishlist.domain.application.endpoint.add_wishlist;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -12,25 +12,27 @@ import wishlist.domain.entity.Wishlist;
 
 @Validated
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
-public class IsProductPresentWishlistRequest {
+public class AddWishlistRequest {
 
     @NotEmpty
     @NotNull
-    @Getter
     private String product;
 
     @NotEmpty
     @NotNull
-    @Getter
     private String customer;
+
+    public AddWishlistRequest(String product, String customer) {
+        this.product = product;
+        this.customer = customer;
+    }
 
     public Wishlist toWishlist() {
         return new CommonWishlist.Builder()
-                .setCustomer(customer)
-                .setProducts(List.of(product))
-                .build();
+            .setCustomer(customer)
+            .setProducts(List.of(product))
+            .build();
     }
 
     public String getProduct() {

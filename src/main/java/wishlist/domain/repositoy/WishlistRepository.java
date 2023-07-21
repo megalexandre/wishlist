@@ -1,4 +1,4 @@
-package wishlist.resouce.repository;
+package wishlist.domain.repositoy;
 
 import java.util.Collection;
 import java.util.Optional;

@@ -3,7 +3,7 @@ package wishlist.domain.usecases;
 import java.util.Collection;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import wishlist.resouce.repository.WishlistRepository;
+import wishlist.domain.repositoy.WishlistRepository;
 
 @Service
 public class SearchProductsUseCase implements UseCase<String, Optional<Collection<String>>> {

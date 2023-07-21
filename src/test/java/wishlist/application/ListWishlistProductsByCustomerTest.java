@@ -3,7 +3,7 @@ package wishlist.application;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import wishlist.application.endpoints.isProductPresentWishlistCustomer.IsProductPresentWishlistEndpoint;
+import wishlist.domain.application.endpoint.is_product_present.IsProductPresentWishlistEndpoint;
 
 @ExtendWith(MockitoExtension.class)
 class ListWishlistProductsByCustomerTest {

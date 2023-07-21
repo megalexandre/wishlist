@@ -1,4 +1,4 @@
-package wishlist.application.endpoints.removeWishlistProduct;
+package wishlist.domain.application.endpoint.removeWishlistProduct;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

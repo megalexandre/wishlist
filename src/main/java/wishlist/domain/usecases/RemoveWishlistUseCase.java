@@ -23,7 +23,7 @@ public class RemoveWishlistUseCase implements UseCase<Wishlist, Boolean> {
         var optionalProducts = searchProductsUseCase.execute(wishlist.getCustomer());
 
         if(optionalProducts.isEmpty()){
-
+            return false;
         }
 
         var productToRemove = wishlist.getProducts().stream().findFirst().orElseThrow();
@@ -34,8 +34,7 @@ public class RemoveWishlistUseCase implements UseCase<Wishlist, Boolean> {
             .setProducts(optionalProducts.get().stream().filter(p -> p.equals(productToRemove)).toList())
         .build();
 
-        saveWishlistUseCase.execute(newWishlist);
-        return null;
+        return saveWishlistUseCase.execute(newWishlist).getId() != null;
     }
 
 }
