@@ -39,10 +39,12 @@ public class SaveWishlistUseCase implements UseCase<Wishlist, Wishlist>{
             return wishlist;
         }
 
-        return new CommonWishlist.WishlistBuilder()
-            .setId(wishlist.getId())
-            .setCustomer(wishlist.getCustomer())
-            .setProducts(Stream.of(wishlist.getProducts(), previous.get().getProducts()).flatMap(Collection::stream).toList())
+        return new CommonWishlist.Builder()
+            .setId(previous.get().getId())
+            .setCustomer(previous.get().getCustomer())
+            .setProducts(
+                Stream.of(wishlist.getProducts(), previous.get().getProducts())
+                .flatMap(Collection::stream).distinct().toList())
             .build();
     }
 

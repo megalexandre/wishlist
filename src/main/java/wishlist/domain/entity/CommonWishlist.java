@@ -1,9 +1,9 @@
 package wishlist.domain.entity;
 
 import java.util.Collection;
-import java.util.UUID;
+import static java.util.UUID.randomUUID;
 
-public class CommonWishlist implements Wishlist{
+public class CommonWishlist implements Wishlist {
 
     private String id;
     private String customer;
@@ -12,7 +12,7 @@ public class CommonWishlist implements Wishlist{
     private CommonWishlist() {
     }
 
-    public CommonWishlist(WishlistBuilder builder) {
+    public CommonWishlist(Builder builder) {
         this.id = builder.id;
         this.customer = builder.customer;
         this.products = builder.products;
@@ -21,7 +21,7 @@ public class CommonWishlist implements Wishlist{
     @Override
     public String createId() {
         if(id == null){
-            this.id = UUID.randomUUID().toString();
+            this.id = randomUUID().toString();
         }
 
         return id;
@@ -40,25 +40,27 @@ public class CommonWishlist implements Wishlist{
         return products;
     }
 
-    public static class WishlistBuilder{
+    public static class Builder {
 
         private String id;
         private String customer;
         private Collection<String> products;
 
-        public WishlistBuilder setId(String id) {
+        public Builder setId(String id) {
             this.id = id;
             return this;
         }
 
-        public WishlistBuilder setCustomer(String customer) {
+        public Builder setCustomer(String customer) {
             this.customer = customer;
             return this;
         }
 
-        public WishlistBuilder setProducts(Collection<String> products) {
+        public Builder setProducts(Collection<String> products) {
 
             if(products.size() > 20){
+                /**@TODO criar um exception especializada*/
+
                 throw new RuntimeException("");
             }
 

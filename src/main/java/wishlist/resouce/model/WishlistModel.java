@@ -24,7 +24,7 @@ public class WishlistModel {
     }
 
     public Wishlist toWishlist() {
-        return new CommonWishlist.WishlistBuilder()
+        return new CommonWishlist.Builder()
             .setId(id)
             .setCustomer(customer)
             .setProducts(products)
