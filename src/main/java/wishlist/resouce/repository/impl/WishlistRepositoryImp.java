@@ -1,15 +1,17 @@
 package wishlist.resouce.repository.impl;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 import wishlist.domain.entity.Wishlist;
+import wishlist.resouce.model.WishlistModel;
 import wishlist.resouce.repository.WishlistRepository;
 import wishlist.resouce.repository.WishlistRepositoryJpa;
 
 @Repository
 public class WishlistRepositoryImp implements WishlistRepository {
 
-    private WishlistRepositoryJpa wishlistRepositoryJpa;
+    private final WishlistRepositoryJpa wishlistRepositoryJpa;
 
     public WishlistRepositoryImp(WishlistRepositoryJpa wishlistRepositoryJpa){
         this.wishlistRepositoryJpa = wishlistRepositoryJpa;
@@ -17,21 +19,18 @@ public class WishlistRepositoryImp implements WishlistRepository {
 
     @Override
     public Wishlist save(Wishlist wishlist) {
-        return null;
+        return wishlistRepositoryJpa.save(new WishlistModel(wishlist)).toWishlist();
     }
 
     @Override
-    public void remove(String id) {
-        wishlistRepositoryJpa.deleteById(id);
+    public Optional<Wishlist> findByCustomer(String customer) {
+        return wishlistRepositoryJpa.findByCustomer(customer)
+                .map(WishlistModel::toWishlist);
     }
 
     @Override
-    public List<Wishlist> listAll(String clientId) {
-        return null;
+    public Optional<Collection<String>> findProductsByCustomer(String customer) {
+        return wishlistRepositoryJpa.findByCustomer(customer).map(it -> it.getProducts());
     }
 
-    @Override
-    public Boolean clientHasItem(String client, String id) {
-        return true;
-    }
 }

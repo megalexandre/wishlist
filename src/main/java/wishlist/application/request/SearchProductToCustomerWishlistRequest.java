@@ -3,6 +3,7 @@ package wishlist.application.request;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
+import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
 
 @Validated
@@ -20,9 +21,9 @@ public class SearchProductToCustomerWishlistRequest {
     }
 
     public Wishlist toWishlist() {
-        return Wishlist.builder()
-            .products(List.of(product))
-            .customer(customer)
+        return new CommonWishlist.WishlistBuilder()
+            .setCustomer(customer)
+            .setProducts(List.of(product))
             .build();
     }
 

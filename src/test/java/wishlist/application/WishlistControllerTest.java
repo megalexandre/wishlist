@@ -1,19 +1,8 @@
 package wishlist.application;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import wishlist.application.request.AddProductToCustomerWishlistRequest;
-import wishlist.application.request.RemoveProductToCustomerWishlistRequest;
-import wishlist.domain.service.WishlistService;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpStatus.OK;
 
 @ExtendWith(MockitoExtension.class)
 class WishlistControllerTest {
@@ -21,8 +10,6 @@ class WishlistControllerTest {
     @InjectMocks
     private WishlistController wishlistController;
 
-    @Mock
-    private WishlistService wishlistService;
 
     /*
     @Test
