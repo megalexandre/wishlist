@@ -1,19 +1,14 @@
 package wishlist.domain.entity;
 
 import java.util.Collection;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import wishlist.domain.exception.MaximumProductLimitExceeded;
 import static java.util.UUID.randomUUID;
 
-@Component
 public class CommonWishlist implements Wishlist {
 
     private String id;
     private String customer;
     private Collection<String> products;
-
-    @Value("${wishlist.product.limit}")
     private int maximumProductLimit;
 
     private CommonWishlist() {
@@ -23,7 +18,7 @@ public class CommonWishlist implements Wishlist {
         this.id = builder.id;
         this.customer = builder.customer;
         this.products = builder.products;
-        builder.setMaximumProductLimit(maximumProductLimit);
+        this.maximumProductLimit = builder.maximumProductLimit;
     }
 
     @Override
@@ -31,7 +26,6 @@ public class CommonWishlist implements Wishlist {
         if(id == null){
             this.id = randomUUID().toString();
         }
-
         return id;
     }
 
@@ -75,8 +69,9 @@ public class CommonWishlist implements Wishlist {
             return this;
         }
 
-        private void setMaximumProductLimit(int maximumProductLimit) {
+        public Builder setMaximumProductLimit(int maximumProductLimit) {
             this.maximumProductLimit = maximumProductLimit;
+            return this;
         }
 
         public Wishlist build(){

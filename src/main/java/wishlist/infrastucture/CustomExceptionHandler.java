@@ -1,4 +1,4 @@
-package infrastucture;
+package wishlist.infrastucture;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
