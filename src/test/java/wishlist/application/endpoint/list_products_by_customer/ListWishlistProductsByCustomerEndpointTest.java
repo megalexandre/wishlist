@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
+import wishlist.domain.entity.WishlistFactory;
 import wishlist.domain.usecases.SearchWishlistUseCase;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,8 +23,9 @@ class ListWishlistProductsByCustomerEndpointTest {
         var id = UUID.randomUUID().toString();
         var customer = "customer";
         var products = List.of("product one", "product two");
+        var factory = new WishlistFactory(20);
 
-        var wishlist = Optional.of(new CommonWishlist.Builder()
+        var wishlist = Optional.of(factory.builder()
                 .setId(id)
                 .setCustomer(customer)
                 .setProducts(products)
@@ -44,7 +45,6 @@ class ListWishlistProductsByCustomerEndpointTest {
 
     @Test
     void shouldReturnNullWith404_whenProductDoesNotExists() {
-        var id = UUID.randomUUID().toString();
         var customer = "customer";
 
         Optional<Wishlist> wishlist = Optional.empty();

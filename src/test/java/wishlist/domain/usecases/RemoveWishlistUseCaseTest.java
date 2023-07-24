@@ -4,11 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import wishlist.application.endpoint.add_wishlist.AddWishlistEndpoint;
-import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
+import wishlist.domain.entity.WishlistFactory;
 import static com.mongodb.assertions.Assertions.assertFalse;
 import static com.mongodb.internal.connection.tlschannel.util.Util.assertTrue;
 import static java.util.UUID.randomUUID;
@@ -24,18 +21,19 @@ class RemoveWishlistUseCaseTest {
     private final RemoveWishlistUseCase useCase;
     private final SaveWishlistUseCase saveWishlistUseCase;
     private final SearchProductsUseCase searchProductsUseCase;
+    private final WishlistFactory factory = new WishlistFactory(20);
 
     public RemoveWishlistUseCaseTest() {
         saveWishlistUseCase = mock(SaveWishlistUseCase.class);
         searchProductsUseCase = mock(SearchProductsUseCase.class);
-        useCase = new RemoveWishlistUseCase(searchProductsUseCase, saveWishlistUseCase);
+        useCase = new RemoveWishlistUseCase(searchProductsUseCase, saveWishlistUseCase, factory);
     }
 
     @Test
     void whenTheCustomerHasNoItems_shouldReturnFalse() {
         when(searchProductsUseCase.execute(any())).thenReturn(Optional.empty());
 
-        var wishlist = new CommonWishlist.Builder()
+        var wishlist = factory.builder()
                 .setId(randomUUID().toString())
                 .setCustomer("customer")
                 .setProducts(List.of("products"))
@@ -51,7 +49,7 @@ class RemoveWishlistUseCaseTest {
     void whenTheCustomerProductsIsNull_shouldReturnFalse() {
         when(searchProductsUseCase.execute(any())).thenReturn(Optional.empty());
 
-        var wishlist = new CommonWishlist.Builder()
+        var wishlist = factory.builder()
                 .setId(randomUUID().toString())
                 .setCustomer("customer")
                 .build();
@@ -69,13 +67,13 @@ class RemoveWishlistUseCaseTest {
         when(searchProductsUseCase.execute(any())).thenReturn(Optional.of(
                 List.of("REMOVE_THIS_PRODUCT","DO_NOT_REMOVE_THIS_PRODUCT")));
 
-        var wishlistSent = new CommonWishlist.Builder()
+        var wishlistSent = factory.builder()
                 .setId(id)
                 .setCustomer("customer")
                 .setProducts(List.of("REMOVE_THIS_PRODUCT"))
                 .build();
 
-        var savedWishlist = new CommonWishlist.Builder()
+        var savedWishlist = factory.builder()
                 .setId(id)
                 .setCustomer("customer")
                 .setProducts(List.of("DO_NOT_REMOVE_THIS_PRODUCT"))

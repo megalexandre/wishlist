@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import wishlist.domain.entity.CommonWishlist;
+import wishlist.domain.entity.WishlistFactory;
 import wishlist.resouce.model.WishlistModel;
 import wishlist.resouce.repository.WishlistRepositoryData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,18 +19,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AddWishlistTest extends BaseIntegration {
 
     @Autowired
-    WishlistRepositoryData dataRepository;
+    private WishlistRepositoryData dataRepository;
+
+    @Autowired
+    private WishlistFactory factory;
 
     @Value("${wishlist.product.limit}")
     private int maximumProductLimit;
 
-
-   @BeforeEach
+    @BeforeEach
     public void resetDateRepository() {
        dataRepository.deleteAll();
     }
-
-
 
     @Test
     void saveNewWishlist() throws Exception {
@@ -75,7 +75,7 @@ class AddWishlistTest extends BaseIntegration {
     void whenExceedMaxSizeProduct_rejectWithBadRequest() throws Exception {
         var products = createStringCollection(maximumProductLimit);
 
-        var wishlistModel = new WishlistModel(new CommonWishlist.Builder()
+        var wishlistModel = new WishlistModel(factory.builder()
             .setId(UUID.randomUUID().toString())
             .setCustomer("customer")
             .setProducts(products)
@@ -98,7 +98,7 @@ class AddWishlistTest extends BaseIntegration {
         var products = List.of("do not duplicate-me");
         var id = UUID.randomUUID().toString();
 
-        var wishlistModel = new WishlistModel(new CommonWishlist.Builder()
+        var wishlistModel = new WishlistModel(factory.builder()
             .setId(id)
             .setCustomer("customer")
             .setProducts(products)
@@ -118,7 +118,6 @@ class AddWishlistTest extends BaseIntegration {
         var savedWishList = dataRepository.findById(id);
 
        assertEquals(savedWishList.get().getProducts(), products);
-
     }
 
     public List<String> createStringCollection(int n) {

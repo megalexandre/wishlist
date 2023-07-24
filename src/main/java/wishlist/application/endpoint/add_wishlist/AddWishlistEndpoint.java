@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wishlist.domain.usecases.SaveWishlistUseCase;
 import wishlist.application.presenter.addwishlist.AddWishListPresenter;
 import wishlist.application.presenter.addwishlist.AddWishlistPresenterResponse;
+import wishlist.domain.entity.WishlistFactory;
+import wishlist.domain.usecases.SaveWishlistUseCase;
 
 @RestController
 @RequestMapping("wishlist")
@@ -18,15 +19,24 @@ public class AddWishlistEndpoint {
     Logger logger = LoggerFactory.getLogger(AddWishlistEndpoint.class);
 
     private final SaveWishlistUseCase useCase;
+    private final WishlistFactory wishlistFactory;
 
-    public AddWishlistEndpoint(SaveWishlistUseCase useCase){
+    public AddWishlistEndpoint(
+            SaveWishlistUseCase useCase,
+            WishlistFactory wishlistFactory){
         this.useCase = useCase;
+        this.wishlistFactory = wishlistFactory;
     }
 
     @PostMapping
     public ResponseEntity<AddWishListPresenter> execute(@RequestBody @Valid AddWishlistRequest request){
         logger.info("Adding product: {} to customer: {}.", request.getCustomer(), request.getProduct());
-        return ResponseEntity.ok(AddWishlistPresenterResponse.fromWishList(useCase.execute(request.toWishlist())));
+        var wishlist = wishlistFactory.builder()
+            .setCustomer(request.getCustomer())
+            .setProduct(request.getProduct())
+        .build();
+
+        return ResponseEntity.ok(AddWishlistPresenterResponse.fromWishList(useCase.execute(wishlist)));
     }
 
 }

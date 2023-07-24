@@ -3,7 +3,6 @@ package wishlist.resouce.model;
 import java.util.Collection;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
 
 @Document("wishlist")
@@ -21,14 +20,6 @@ public class WishlistModel {
         this.id = wishlist.getId();
         this.customer = wishlist.getCustomer();
         this.products = wishlist.getProducts();
-    }
-
-    public Wishlist toWishlist() {
-        return new CommonWishlist.Builder()
-            .setId(id)
-            .setCustomer(customer)
-            .setProducts(products)
-            .build();
     }
 
     public String getId() {

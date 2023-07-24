@@ -2,16 +2,17 @@ package wishlist.resouce.model;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
+import wishlist.domain.entity.WishlistFactory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class WishlistModelTest {
+    private final WishlistFactory factory = new WishlistFactory(20);
 
     @Test
     void shouldConstructorSentParams() {
-        Wishlist wishlist = new CommonWishlist.Builder()
+        Wishlist wishlist = factory.builder()
             .setId("id")
             .setCustomer("customer")
             .setProducts(List.of("Product"))
@@ -24,20 +25,6 @@ class WishlistModelTest {
         assertEquals(wishlist.getProducts(), wishlistModel.getProducts());
     }
 
-    @Test
-    void shouldToWishlistCreateWishListWithParams() {
-        Wishlist wishlist = new CommonWishlist.Builder()
-                .setId("id")
-                .setCustomer("customer")
-                .setProducts(List.of("Product"))
-                .build();
-
-        var testedObject = new WishlistModel(wishlist).toWishlist();
-
-        assertEquals(wishlist.getId(), testedObject.getId());
-        assertEquals(wishlist.getCustomer(), testedObject.getCustomer());
-        assertEquals(wishlist.getProducts(), testedObject.getProducts());
-    }
 
     @Test
     void shouldHaveAnEmptyConstructorForSpringData() {

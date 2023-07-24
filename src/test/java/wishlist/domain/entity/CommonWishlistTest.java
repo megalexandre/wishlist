@@ -16,9 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CommonWishlistTest {
 
+    private final WishlistFactory factory = new WishlistFactory(20);
+
     @Test
     void whenHasNoId_shouldCreate() {
-        var wishlist = new CommonWishlist.Builder()
+        var wishlist = factory.builder()
             .build();
 
         wishlist.createId();
@@ -28,7 +30,7 @@ class CommonWishlistTest {
     @Test
     void whenHasId_shouldDoNoCreate() {
         var originalId = "DO_NOT_OVERRIDE_ME";
-        var wishlist = new CommonWishlist.Builder()
+        var wishlist = factory.builder()
             .setId("DO_NOT_OVERRIDE_ME")
             .build();
 
@@ -41,12 +43,12 @@ class CommonWishlistTest {
         var products = Collections.nCopies(21, "product");
 
         Exception exception = assertThrows(MaximumProductLimitExceeded.class, () -> {
-             new CommonWishlist.Builder()
-                    .setId(randomUUID().toString())
-                    .setCustomer("customer")
-                    .setProducts(products)
-                    .build();
-        });
+            factory.builder()
+                .setId(randomUUID().toString())
+                .setCustomer("customer")
+                .setProducts(products)
+                .build();
+            });
 
         assertEquals("maximum product limit exceeded", exception.getMessage() );
     }
@@ -56,7 +58,7 @@ class CommonWishlistTest {
         var products = Collections.nCopies(20, "product");
 
         assertDoesNotThrow(() ->
-            new CommonWishlist.Builder()
+            factory.builder()
                 .setId(randomUUID().toString())
                 .setCustomer("customer")
                 .setProducts(products)

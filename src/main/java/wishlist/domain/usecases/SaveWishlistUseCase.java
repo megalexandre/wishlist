@@ -2,10 +2,9 @@ package wishlist.domain.usecases;
 
 import java.util.Collection;
 import java.util.stream.Stream;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
+import wishlist.domain.entity.WishlistFactory;
 import wishlist.domain.repositoy.WishlistRepository;
 
 @Service
@@ -13,13 +12,16 @@ public class SaveWishlistUseCase implements UseCase<Wishlist, Wishlist>{
 
     private final WishlistRepository wishlistRepository;
     private final SearchWishlistUseCase searchWishlistUseCase;
+    private final WishlistFactory wishlistFactory;
 
      public SaveWishlistUseCase(
         SearchWishlistUseCase searchWishlistUseCase,
-        WishlistRepository wishlistRepository
+        WishlistRepository wishlistRepository,
+        WishlistFactory wishlistFactory
     ){
         this.searchWishlistUseCase = searchWishlistUseCase;
         this.wishlistRepository = wishlistRepository;
+        this.wishlistFactory = wishlistFactory;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class SaveWishlistUseCase implements UseCase<Wishlist, Wishlist>{
             return wishlist;
         }
 
-        return new CommonWishlist.Builder()
+        return wishlistFactory.builder()
             .setId(previous.get().getId())
             .setCustomer(previous.get().getCustomer())
             .setProducts(

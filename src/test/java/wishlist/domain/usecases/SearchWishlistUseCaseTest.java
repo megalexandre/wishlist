@@ -3,8 +3,8 @@ package wishlist.domain.usecases;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
+import wishlist.domain.entity.WishlistFactory;
 import wishlist.domain.repositoy.WishlistRepository;
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,6 +17,7 @@ class SearchWishlistUseCaseTest {
 
     private final SearchWishlistUseCase searchWishlistUseCase;
     private final WishlistRepository wishlistRepository;
+    private final WishlistFactory factory = new WishlistFactory(20);
 
     public SearchWishlistUseCaseTest() {
         wishlistRepository = mock(WishlistRepository.class);
@@ -26,7 +27,7 @@ class SearchWishlistUseCaseTest {
     @Test
     void shouldReturnCustomer_WishlistFound() {
         String customer = "customer";
-        Wishlist expectedWishlist = new CommonWishlist.Builder()
+        Wishlist expectedWishlist = factory.builder()
                 .setId(randomUUID().toString())
                 .setCustomer(customer)
                 .setProducts(List.of("products"))

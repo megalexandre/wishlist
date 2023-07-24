@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wishlist.application.presenter.removeproduct.RemoveProductPresenterResponse;
+import wishlist.domain.entity.WishlistFactory;
 import wishlist.domain.usecases.RemoveWishlistUseCase;
 
 @RestController
@@ -16,15 +17,26 @@ public class RemoveWishlistEndpoint {
     Logger logger = LoggerFactory.getLogger(RemoveWishlistEndpoint.class);
 
     private final RemoveWishlistUseCase useCase;
+    private final WishlistFactory wishlistFactory;
 
-    public RemoveWishlistEndpoint(RemoveWishlistUseCase useCase){
+    public RemoveWishlistEndpoint(
+        RemoveWishlistUseCase useCase,
+        WishlistFactory wishlistFactory
+        ){
         this.useCase = useCase;
+        this.wishlistFactory = wishlistFactory;
     }
 
     @DeleteMapping
     public ResponseEntity<RemoveProductPresenterResponse> removeProductToCustomerWishlist(@RequestBody RemoveWishlistRequest request){
         logger.info("removing product: {}.to customer: {}.", request.getCustomer(), request.getProduct());
-        return ResponseEntity.ok(new RemoveProductPresenterResponse(useCase.execute(request.toWishlist())));
+
+        var wishlist = wishlistFactory.builder()
+            .setCustomer(request.getCustomer())
+            .setProduct(request.getProduct())
+            .build();
+
+        return ResponseEntity.ok(new RemoveProductPresenterResponse(useCase.execute(wishlist)));
     }
 
 }

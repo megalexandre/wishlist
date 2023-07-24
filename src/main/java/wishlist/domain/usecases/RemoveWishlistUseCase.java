@@ -5,23 +5,25 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
+import wishlist.domain.entity.WishlistFactory;
 
 @Service
 public class RemoveWishlistUseCase implements UseCase<Wishlist, Boolean> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
     private final SearchProductsUseCase searchProductsUseCase;
     private final SaveWishlistUseCase saveWishlistUseCase;
+    private final WishlistFactory wishlistFactory;
 
     public RemoveWishlistUseCase(
         SearchProductsUseCase searchProductsUseCase,
-        SaveWishlistUseCase saveWishlistUseCase
+        SaveWishlistUseCase saveWishlistUseCase,
+        WishlistFactory wishlistFactory
     ){
         this.searchProductsUseCase = searchProductsUseCase;
         this.saveWishlistUseCase = saveWishlistUseCase;
+        this.wishlistFactory = wishlistFactory;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class RemoveWishlistUseCase implements UseCase<Wishlist, Boolean> {
         Collection<String> newProducts = new ArrayList<>(optionalProducts.get());
         newProducts.remove(productToRemove);
 
-        var newWishlist = new CommonWishlist.Builder()
+        var newWishlist = wishlistFactory.builder()
             .setId(wishlist.getId())
             .setCustomer(wishlist.getCustomer())
             .setProducts(newProducts)

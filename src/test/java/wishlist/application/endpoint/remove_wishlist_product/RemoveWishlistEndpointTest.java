@@ -1,6 +1,7 @@
 package wishlist.application.endpoint.remove_wishlist_product;
 
 import org.junit.jupiter.api.Test;
+import wishlist.domain.entity.WishlistFactory;
 import wishlist.domain.usecases.RemoveWishlistUseCase;
 import static com.mongodb.assertions.Assertions.assertFalse;
 import static java.util.Objects.requireNonNull;
@@ -20,11 +21,12 @@ class RemoveWishlistEndpointTest {
         var product = "product";
 
         var useCase = mock(RemoveWishlistUseCase.class);
+        var factory = new WishlistFactory(20);
 
         when(useCase.execute(any())).thenReturn(true);
 
         var request = new RemoveWishlistRequest(customer, product);
-        var endpoint = new RemoveWishlistEndpoint(useCase);
+        var endpoint = new RemoveWishlistEndpoint(useCase, factory);
 
         var response = endpoint.removeProductToCustomerWishlist(request);
 
@@ -42,7 +44,8 @@ class RemoveWishlistEndpointTest {
         when(useCase.execute(any())).thenReturn(false);
 
         var request = new RemoveWishlistRequest(customer, product);
-        var endpoint = new RemoveWishlistEndpoint(useCase);
+        var factory = new WishlistFactory(20);
+        var endpoint = new RemoveWishlistEndpoint(useCase, factory);
 
         var response = endpoint.removeProductToCustomerWishlist(request);
 

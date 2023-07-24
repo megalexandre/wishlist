@@ -3,7 +3,7 @@ package wishlist.resouce.repository.impl;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import wishlist.domain.entity.CommonWishlist;
+import wishlist.domain.entity.WishlistFactory;
 import wishlist.resouce.model.WishlistModel;
 import wishlist.resouce.repository.WishlistRepositoryData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,18 +15,18 @@ import static org.mockito.Mockito.when;
 
 class WishlistRepositoryImpTest {
 
-    private WishlistRepositoryData mockData;
-    private WishlistRepositoryImp wishlistRepository;
-
+    private final WishlistRepositoryData mockData;
+    private final WishlistRepositoryImp wishlistRepository;
+    private final WishlistFactory factory = new WishlistFactory(20);
 
     public WishlistRepositoryImpTest() {
         mockData = mock(WishlistRepositoryData.class);
-        wishlistRepository = new WishlistRepositoryImp(mockData);
+        wishlistRepository = new WishlistRepositoryImp(mockData, factory);
     }
 
     @Test
     void testSave() {
-        var wishlist = new CommonWishlist.Builder()
+        var wishlist = factory.builder()
                 .setId("123")
                 .setCustomer("customer")
                 .setProducts(List.of("product"))
@@ -45,7 +45,7 @@ class WishlistRepositoryImpTest {
     void testFindByCustomer_ExistingCustomer() {
         var customer = "customer";
         var wishlistModel = new WishlistModel(
-            new CommonWishlist.Builder()
+                factory.builder()
                     .setId("123")
                     .setCustomer("customer")
                     .setProducts(List.of("product"))
@@ -75,11 +75,11 @@ class WishlistRepositoryImpTest {
     void testFindProductsByCustomer_ExistingCustomer() {
         String customer = "customer";
         WishlistModel wishlistModel = new WishlistModel(
-            new CommonWishlist.Builder()
-                    .setId("123")
-                    .setCustomer("customer")
-                    .setProducts(List.of("product"))
-                    .build());
+            factory.builder()
+                .setId("123")
+                .setCustomer("customer")
+                .setProducts(List.of("product"))
+                .build());
 
         when(mockData.findByCustomer(customer)).thenReturn(Optional.of(wishlistModel));
         var found = wishlistRepository.findProductsByCustomer(customer);

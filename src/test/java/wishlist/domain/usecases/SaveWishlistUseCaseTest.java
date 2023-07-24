@@ -5,10 +5,11 @@ import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
+import wishlist.domain.entity.WishlistFactory;
 import wishlist.domain.repositoy.WishlistRepository;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -21,16 +22,17 @@ class SaveWishlistUseCaseTest {
     private final SaveWishlistUseCase saveWishlistUseCase;
     private final WishlistRepository wishlistRepository;
     private final SearchWishlistUseCase searchWishlistUseCase;
+    private final WishlistFactory factory = new WishlistFactory(20);
 
     public SaveWishlistUseCaseTest() {
         wishlistRepository = mock(WishlistRepository.class);
         searchWishlistUseCase = mock(SearchWishlistUseCase.class);
-        saveWishlistUseCase = new SaveWishlistUseCase(searchWishlistUseCase, wishlistRepository);
+        saveWishlistUseCase = new SaveWishlistUseCase(searchWishlistUseCase, wishlistRepository, factory);
     }
 
     @Test
     void whenReceiverNewWishlist_shouldCreateId() {
-        var wishlist = new CommonWishlist.Builder()
+        var wishlist = factory.builder()
             .setCustomer("customer")
             .setProducts(List.of("product1"))
             .build();
@@ -48,7 +50,7 @@ class SaveWishlistUseCaseTest {
     @Test
     void whenReceiverAExistingWishlist_shouldDoNotCreateId() {
         var oldId = UUID.randomUUID().toString();
-        var wishlist = new CommonWishlist.Builder()
+        var wishlist = factory.builder()
                 .setId(oldId)
                 .setCustomer("customer")
                 .setProducts(List.of("product1"))
@@ -66,7 +68,7 @@ class SaveWishlistUseCaseTest {
 
     @Test
     void shouldDoNotDuplicateProduct() {
-        var wishlist = new CommonWishlist.Builder()
+        var wishlist = factory.builder()
             .setId(UUID.randomUUID().toString())
             .setCustomer("customer")
             .setProducts(List.of("product"))
