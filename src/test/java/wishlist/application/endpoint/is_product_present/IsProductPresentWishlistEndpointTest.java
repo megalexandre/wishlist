@@ -22,7 +22,6 @@ class IsProductPresentWishlistEndpointTest {
         String customer = "customer";
         Collection<String> products = List.of("product");
 
-
         var searchProductsUseCase = mock(SearchProductsUseCase.class);
         when(searchProductsUseCase.execute(customer)).thenReturn(Optional.of(products));
 

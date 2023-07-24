@@ -2,9 +2,13 @@ package wishlist.application.endpoint.add_wishlist;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
+@AllArgsConstructor
+@Getter
 public class AddWishlistRequest {
 
     @NotEmpty(message = "Product cant be empty")
@@ -15,16 +19,4 @@ public class AddWishlistRequest {
     @NotNull(message = "Customer is not optional")
     private final String customer;
 
-    public AddWishlistRequest(String product, String customer) {
-        this.product = product;
-        this.customer = customer;
-    }
-
-    public String getProduct() {
-        return product;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
 }

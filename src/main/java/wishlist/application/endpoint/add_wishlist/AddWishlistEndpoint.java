@@ -21,9 +21,7 @@ public class AddWishlistEndpoint {
     private final SaveWishlistUseCase useCase;
     private final WishlistFactory wishlistFactory;
 
-    public AddWishlistEndpoint(
-            SaveWishlistUseCase useCase,
-            WishlistFactory wishlistFactory){
+    public AddWishlistEndpoint(SaveWishlistUseCase useCase, WishlistFactory wishlistFactory){
         this.useCase = useCase;
         this.wishlistFactory = wishlistFactory;
     }
