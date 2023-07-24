@@ -15,10 +15,7 @@ public class WishlistRepositoryImp implements WishlistRepository {
     private final WishlistRepositoryData wishlistRepositoryData;
     private final WishlistFactory wishlistFactory;
 
-    public WishlistRepositoryImp(
-        WishlistRepositoryData wishlistRepositoryData,
-        WishlistFactory wishlistFactory
-    ){
+    public WishlistRepositoryImp(WishlistRepositoryData wishlistRepositoryData, WishlistFactory wishlistFactory){
         this.wishlistRepositoryData = wishlistRepositoryData;
         this.wishlistFactory = wishlistFactory;
     }
@@ -26,7 +23,6 @@ public class WishlistRepositoryImp implements WishlistRepository {
     @Override
     public Wishlist save(Wishlist wishlist) {
         var wishlistModel =  wishlistRepositoryData.save(new WishlistModel(wishlist));
-
         return wishlistFactory.builder()
             .setId(wishlistModel.getId())
             .setCustomer(wishlist.getCustomer())
@@ -36,9 +32,7 @@ public class WishlistRepositoryImp implements WishlistRepository {
 
     @Override
     public Optional<Wishlist> findByCustomer(String customer) {
-        var optional = wishlistRepositoryData.findByCustomer(customer);
-
-        return optional.map(model -> wishlistFactory.builder()
+        return wishlistRepositoryData.findByCustomer(customer).map(model -> wishlistFactory.builder()
             .setId(model.getId())
             .setCustomer(model.getCustomer())
             .setProducts(model.getProducts())

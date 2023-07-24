@@ -1,11 +1,13 @@
 package wishlist.resouce.model;
 
 import java.util.Collection;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import wishlist.domain.entity.Wishlist;
 
 @Document("wishlist")
+@Getter
 public class WishlistModel {
 
     @Id
@@ -22,15 +24,4 @@ public class WishlistModel {
         this.products = wishlist.getProducts();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public Collection<String> getProducts() {
-        return products;
-    }
 }
