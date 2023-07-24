@@ -38,9 +38,7 @@ dependencies {
 
 test {
 	filter {
-		excludeTestsMatching "wishlist.resouce.model.*"
 		excludeTestsMatching "*.WishlistApplication"
-		//com.mkyong.integration.*
 	}
 }
 
