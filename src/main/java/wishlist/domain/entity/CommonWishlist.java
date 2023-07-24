@@ -9,7 +9,6 @@ public class CommonWishlist implements Wishlist {
     private String id;
     private String customer;
     private Collection<String> products;
-    private int maximumProductLimit;
 
     private CommonWishlist() {
     }
@@ -18,7 +17,6 @@ public class CommonWishlist implements Wishlist {
         this.id = builder.id;
         this.customer = builder.customer;
         this.products = builder.products;
-        this.maximumProductLimit = builder.maximumProductLimit;
     }
 
     @Override
@@ -47,6 +45,8 @@ public class CommonWishlist implements Wishlist {
         private String id;
         private String customer;
         private Collection<String> products;
+
+        /*@TODO melhor seria transformar isso em uma factory, e deixar isso como um parametro de construtor*/
         private int maximumProductLimit = 20;
 
         public Builder setId(String id) {
@@ -66,11 +66,6 @@ public class CommonWishlist implements Wishlist {
             }
 
             this.products = products;
-            return this;
-        }
-
-        public Builder setMaximumProductLimit(int maximumProductLimit) {
-            this.maximumProductLimit = maximumProductLimit;
             return this;
         }
 

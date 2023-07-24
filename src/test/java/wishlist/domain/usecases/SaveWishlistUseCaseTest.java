@@ -50,7 +50,6 @@ class SaveWishlistUseCaseTest {
         var oldId = UUID.randomUUID().toString();
         var wishlist = new CommonWishlist.Builder()
                 .setId(oldId)
-                .setMaximumProductLimit(20)
                 .setCustomer("customer")
                 .setProducts(List.of("product1"))
                 .build();
@@ -70,7 +69,6 @@ class SaveWishlistUseCaseTest {
         var wishlist = new CommonWishlist.Builder()
             .setId(UUID.randomUUID().toString())
             .setCustomer("customer")
-            .setMaximumProductLimit(20)
             .setProducts(List.of("product"))
             .build();
 

@@ -14,10 +14,7 @@ public class SaveWishlistUseCase implements UseCase<Wishlist, Wishlist>{
     private final WishlistRepository wishlistRepository;
     private final SearchWishlistUseCase searchWishlistUseCase;
 
-    @Value("${wishlist.product.limit}")
-    private int maximumProductLimit;
-
-    public SaveWishlistUseCase(
+     public SaveWishlistUseCase(
         SearchWishlistUseCase searchWishlistUseCase,
         WishlistRepository wishlistRepository
     ){
@@ -45,7 +42,6 @@ public class SaveWishlistUseCase implements UseCase<Wishlist, Wishlist>{
         }
 
         return new CommonWishlist.Builder()
-            .setMaximumProductLimit(maximumProductLimit)
             .setId(previous.get().getId())
             .setCustomer(previous.get().getCustomer())
             .setProducts(
