@@ -15,12 +15,12 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("wishlist")
-public class ListWishlistProductsByCustomer {
-    Logger logger = LoggerFactory.getLogger(ListWishlistProductsByCustomer.class);
+public class ListWishlistProductsByCustomerEndpoint {
+    Logger logger = LoggerFactory.getLogger(ListWishlistProductsByCustomerEndpoint.class);
 
     private final SearchWishlistUseCase useCase;
 
-    public ListWishlistProductsByCustomer(SearchWishlistUseCase searchWishlistUseCase){
+    public ListWishlistProductsByCustomerEndpoint(SearchWishlistUseCase searchWishlistUseCase){
         this.useCase = searchWishlistUseCase;
     }
 

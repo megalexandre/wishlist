@@ -48,7 +48,4 @@ public class SaveWishlistUseCase implements UseCase<Wishlist, Wishlist>{
             .build();
     }
 
-
-
-
 }

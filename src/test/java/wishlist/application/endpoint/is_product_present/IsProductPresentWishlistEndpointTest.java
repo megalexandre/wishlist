@@ -17,7 +17,6 @@ import static org.springframework.http.HttpStatus.OK;
 
 class IsProductPresentWishlistEndpointTest {
 
-
     @Test
     void shouldReturnTrueWith200_whenProductExists() {
         String customer = "customer";

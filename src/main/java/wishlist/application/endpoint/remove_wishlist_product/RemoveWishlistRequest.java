@@ -1,4 +1,4 @@
-package wishlist.application.endpoint.removeWishlistProduct;
+package wishlist.application.endpoint.remove_wishlist_product;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,6 @@ import wishlist.domain.entity.Wishlist;
 
 @Validated
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class RemoveWishlistRequest {
 
@@ -23,6 +22,11 @@ public class RemoveWishlistRequest {
     @NotEmpty
     @NotNull
     private String customer;
+
+    public RemoveWishlistRequest(String product, String customer) {
+        this.product = product;
+        this.customer = customer;
+    }
 
     public Wishlist toWishlist() {
         return new CommonWishlist.Builder()
