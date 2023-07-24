@@ -38,13 +38,6 @@ dependencies {
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:mongodb"
 
-
-}
-
-test {
-	filter {
-		excludeTestsMatching "*.WishlistApplication"
-	}
 }
 
 tasks.named('test') {
