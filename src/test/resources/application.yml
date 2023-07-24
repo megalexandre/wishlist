@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: ${mongodb.container.port}
+      database: wishlist
+
+springdoc:
+  api-docs.path: /api-docs
+  swagger-ui.path: /api-docs.html
+
+wishlist.product.limit: 20
