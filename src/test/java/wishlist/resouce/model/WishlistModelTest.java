@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import wishlist.domain.entity.CommonWishlist;
 import wishlist.domain.entity.Wishlist;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class WishlistModelTest {
 
@@ -36,6 +37,12 @@ class WishlistModelTest {
         assertEquals(wishlist.getId(), testedObject.getId());
         assertEquals(wishlist.getCustomer(), testedObject.getCustomer());
         assertEquals(wishlist.getProducts(), testedObject.getProducts());
+    }
+
+    @Test
+    void shouldHaveAnEmptyConstructorForSpringData() {
+        var emptyWishlistModel = new WishlistModel();
+        assertNull(emptyWishlistModel.getId());
     }
 
 

@@ -1,5 +1,6 @@
 package wishlist.domain.entity;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,7 +25,6 @@ class CommonWishlistTest {
         assertNotNull(wishlist.getId());
     }
 
-
     @Test
     void whenHasId_shouldDoNoCreate() {
         var originalId = "DO_NOT_OVERRIDE_ME";
@@ -48,7 +48,7 @@ class CommonWishlistTest {
                     .build();
         });
 
-        assertEquals(exception.getMessage(),"maximum product limit exceeded" );
+        assertEquals("maximum product limit exceeded", exception.getMessage() );
     }
 
     @Test
@@ -66,10 +66,13 @@ class CommonWishlistTest {
     }
 
     @Test
-    public void testConstructorIsPrivate() {
+    void testConstructorIsPrivate() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         var constructor =
                 Arrays.stream(CommonWishlist.class.getDeclaredConstructors())
                         .filter(t -> t.getParameterCount() == 0 ).findFirst().get();
+
+        constructor.setAccessible(true);
+        constructor.newInstance();
 
         assertTrue(Modifier.isPrivate(constructor.getModifiers()),"should have a private constructor to prevent");
     }
