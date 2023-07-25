@@ -1,60 +1,38 @@
-package integration;
+package integration.add;
 
+import integration.BaseIntegrationTest;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import wishlist.domain.entity.WishlistFactory;
 import wishlist.resouce.model.WishlistModel;
-import wishlist.resouce.repository.WishlistRepositoryData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class AddWishlistTest extends BaseIntegration {
-
-    @Autowired
-    private WishlistRepositoryData dataRepository;
-
-    @Autowired
-    private WishlistFactory factory;
-
-    @Value("${wishlist.product.limit}")
-    private int maximumProductLimit;
-
-    @BeforeEach
-    public void resetDateRepository() {
-       dataRepository.deleteAll();
-    }
+class AddWishlistTest extends BaseIntegrationTest {
 
     @Test
-    void saveNewWishlist() throws Exception {
+    void whenReceiverAValidWishlist_saveThenSuccess() throws Exception {
         var request  = "{\"customer\":\"customerExample\",\"product\":\"my amazing product\"}";
-
-        mockMvc
-            .perform(MockMvcRequestBuilders
+        mockMvc.perform(MockMvcRequestBuilders
                 .post("/wishlist")
                 .content(request)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON))
             .andExpect(status().is2xxSuccessful());
     }
 
     @Test
     void whenReceiverWishlistWitNoCustomer_rejectWithBadRequest() throws Exception {
         var request  = "{\"product\":\"my amazing product\"}";
-
-        mockMvc
-            .perform(MockMvcRequestBuilders
+        mockMvc.perform(MockMvcRequestBuilders
                 .post("/wishlist")
                 .content(request)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON))
             .andExpect(status().isBadRequest());
     }
 
@@ -62,12 +40,11 @@ class AddWishlistTest extends BaseIntegration {
     void whenReceiverWishlistWitNoProducts_rejectWithBadRequest() throws Exception {
         var request  = "{\"customer\":\"customerExample\"}";
 
-        mockMvc
-            .perform(MockMvcRequestBuilders
+        mockMvc.perform(MockMvcRequestBuilders
                 .post("/wishlist")
                 .content(request)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON))
             .andExpect(status().isBadRequest());
     }
 
@@ -88,8 +65,8 @@ class AddWishlistTest extends BaseIntegration {
         mockMvc.perform(MockMvcRequestBuilders
             .post("/wishlist")
             .content(request)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
+            .contentType(APPLICATION_JSON)
+            .accept(APPLICATION_JSON))
         .andExpect(status().isBadRequest());
     }
 
@@ -111,8 +88,8 @@ class AddWishlistTest extends BaseIntegration {
         mockMvc.perform(MockMvcRequestBuilders
                     .post("/wishlist")
                     .content(request)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON))
+                    .contentType(APPLICATION_JSON)
+                    .accept(APPLICATION_JSON))
             .andExpect(status().is2xxSuccessful());
 
         var savedWishList = dataRepository.findById(id);

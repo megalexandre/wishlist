@@ -3,8 +3,10 @@ package wishlist.application.endpoint.is_product_present;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import wishlist.domain.usecases.SearchProductsUseCase;
+import wishlist.domain.entity.WishlistFactory;
+import wishlist.domain.usecases.SearchWishlistUseCase;
 import static com.mongodb.assertions.Assertions.assertFalse;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,14 +23,18 @@ class IsProductPresentWishlistEndpointTest {
     void shouldReturnTrueWith200_whenProductExists() {
         String customer = "customer";
         Collection<String> products = List.of("product");
+        var factory = new WishlistFactory(20);
+        var wishlist = factory.builder()
+            .setId(UUID.randomUUID().toString())
+            .setCustomer(customer)
+            .setProducts(products)
+            .build();
 
-        var searchProductsUseCase = mock(SearchProductsUseCase.class);
-        when(searchProductsUseCase.execute(customer)).thenReturn(Optional.of(products));
+        var useCase = mock(SearchWishlistUseCase.class);
+        when(useCase.execute(customer)).thenReturn(Optional.of(wishlist));
 
-        var request = new IsProductPresentWishlistRequest("product" ,customer);
-        var endpoint = new IsProductPresentWishlistEndpoint(searchProductsUseCase);
-
-        var response = endpoint.isProductPresent(request);
+        var endpoint = new IsProductPresentWishlistEndpoint(useCase);
+        var response = endpoint.isProductPresent("customer", "product");
 
         assertNotNull(response);
         assertEquals(OK, response.getStatusCode());
@@ -38,13 +44,11 @@ class IsProductPresentWishlistEndpointTest {
     @Test
     void shouldReturnFalseWith404_whenProductDoesNotExists() {
         String customer = "customer";
-        var searchProductsUseCase = mock(SearchProductsUseCase.class);
-        when(searchProductsUseCase.execute(customer)).thenReturn(Optional.empty());
+        var useCase = mock(SearchWishlistUseCase.class);
+        when(useCase.execute(customer)).thenReturn(Optional.empty());
 
-        var request = new IsProductPresentWishlistRequest("product" , customer);
-        var endpoint = new IsProductPresentWishlistEndpoint(searchProductsUseCase);
-
-        var response = endpoint.isProductPresent(request);
+        var endpoint = new IsProductPresentWishlistEndpoint(useCase);
+        var response = endpoint.isProductPresent("product" , customer);
 
         assertNotNull(response);
         assertEquals(NOT_FOUND, response.getStatusCode());
