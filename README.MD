@@ -2,13 +2,13 @@
 
 Descrição do Projeto
 
-## _Projeto java com springboot para manipular a lista de desejos do cliente_
+## _Projeto com arquitetura limpa escrito com java e springboot para manipular a lista de desejos do cliente_
 
 Funcionalidades Principais:
- - Adicionar um produto na Wishlist do cliente;
- - Remover um produto da Wishlist do cliente;
- - Consultar todos os produtos da Wishlist do cliente;
- - Consultar se um determinado produto está na Wishlist do cliente;
+- Adicionar um produto na Wishlist do cliente;
+- Remover um produto da Wishlist do cliente;
+- Consultar todos os produtos da Wishlist do cliente;
+- Consultar se um determinado produto está na Wishlist do cliente;
 
 ...
 Tecnologias Utilizadas
@@ -24,7 +24,6 @@ Java 17
 Docker
 ...
 ###### Como executar o projeto?
-
 é necessario possuir java17+ e docker
 
 build:
@@ -35,50 +34,57 @@ Avisos:
 doker-compose up
 ...
 
+----------------------------
 ###### Endpoints da API
 
-# Adicionar Item à Lista de Desejos
+# Listar
+**Método**: GET
+**URL**: GET /wishlist/listProductsByCustomer?customer=customer
+**Content-Type**: application/json
 
-Método: POST
-URL: POST /wishlist
-Content-Type: application/json
-request
+CURL
+```
+curl --location 'http://localhost:8080/wishlist/listProductsByCustomer?customer=customer'
+```
 
-curl:
+RESPONSE:
+```
+{"products":["awesome product"]}
+```
+quando a lista é vazia o status de retorno é **NOT_FOUND 404**
+quando a lista possui itens o retorno é **SUCESSO 200**
+
+----------------------------
+# Adicionar
+**Método**: GET
+**URL**: GET /wishlist/listProductsByCustomer?customer=customer
+**Content-Type**: application/json
+
+CURL
 ```
 curl --location 'http://localhost:8080/wishlist' \
+--header 'asdadas: qwewqeq' \
+--header 'wswss: sassa' \
 --header 'Content-Type: application/json' \
 --data '{
-    "product": "b",
-    "customer": "a"
-``` 
-
-data:
-```json  
-{
-    "customer": "12345",
-    "product": "Produto A"
-}
-```
-Parâmetros:
-customer **(obrigatório)**: O identificador do cliente.
-product **(obrigatório)**: O nome ou identificador do produto a ser adicionado.
-
-resposta:
-```json  
-{
-"id": "33ee31b4-95af-44e7-a546-27ab6fbc80e1"
-}
+    "product": "awesome product",
+    "customer": "awesome customer"
+}'
 ```
 
-# Remover Item da Lista de Desejos
+RESPONSE:
+```
+{"id": "85f86c74-e2a5-4e34-9ea8-eac6a6c70b53"}
+```
+**SUCESSO 200**
+----------------------------
+# REMOVER
+**Método**: DELETE
+**URL**: DELETE /wishlist
+**Content-Type**: application/json
 
-Método: DELETE
-URL: DELETE /wishlist
-Content-Type: application/json
-
-curl
-```json  
+CURL
+```
 curl --location --request DELETE 'http://localhost:8080/wishlist' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -87,39 +93,21 @@ curl --location --request DELETE 'http://localhost:8080/wishlist' \
 }'
 ```
 
-Parâmetros:
-customer **(obrigatório)**: O identificador do cliente.
-product **(obrigatório)**: O nome ou identificador do produto a ser removido.
-
-data:
-```json  
-{
-"customer": "12345",
-"product": "Produto A"
-}
+RESPONSE:
 ```
-
-resposta:
-```json  
-{
-"isRemoved": true
-}
+{ "isRemoved": true}
 ```
-retorna true, quando existia um objeto que foi apagado, e false quando o dado a ser apagado não foi encontrado,
-em ambos os casos retorna SUCCESS 200
+isRemoved retorna true quando um produto foi encontrado. e false quando não houve correspôndencia
+**SUCESSO 200**
+----------------------------
+# BUSCAR
+**Método**: GET
+**URL**: GET /wishlist/isProductInCustomerWishlist
+**Content-Type**: application/json
 
-# Verificar se um Produto Está na Lista de Desejos
-
-Método: GET
-URL: GET /wishlist/searchProductInCustomerWishlist
-Parâmetros:
-customer **(obrigatório)**: O identificador do cliente.
-product **(obrigatório)**: O nome ou identificador do produto a ser verificado.
-
-
-curl
-```json  
-curl --location --request GET 'http://localhost:8080/wishlist/searchProductInCustomerWishlist' \
+CURL
+```
+curl --location --request GET 'http://localhost:8080/wishlist/isProductInCustomerWishlist?customer=awesome%20customer&product=awesome%20product' \
 --header 'Content-Type: application/json' \
 --data '{
     "customer": "a",
@@ -127,43 +115,21 @@ curl --location --request GET 'http://localhost:8080/wishlist/searchProductInCus
 }'
 ```
 
-Requisição
-``` 
-http://localhost:8080/wishlist/searchProductInCustomerWishlist?customer=12345&product=Produto A
+RESPONSE:
+quando o produto está cadastrado:
+**SUCESSO 200**
+```
+{"isProductPresent": true}
 ```
 
-Response:
-``` 
-{"isProductPresent": true }
-``` 
-retorna:
-true HTTP 200 quando encontrado e
-false HTTP 404 quando não foi encontrado
+quando o produto não foi encontrado:
+**SUCESSO 404**
+```
+{"isProductPresent": false}
+```
 
-# Listar Produtos da Lista de Desejos de um Cliente
-
-Método: GET
-URL: http://localhost:8080/wishlist/listProductsByCustomer/{customer}
-Parâmetros:
-customer (obrigatório): O identificador do cliente.
-
-Requisção:
-``` 
-curl --location 'http://localhost:8080/wishlist/listProductsByCustomer/a' --data ''
-``` 
-
-Resposta:
-``` 
-{
-"products": ["a","b","c"]
-}
-``` 
-
-
-
-...
+-------------------------------
 Leituras sugeridas:
-
 https://martinfowler.com/bliki/ValueObject.html
 https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html
 https://www.baeldung.com/spring-boot-clean-architecture
