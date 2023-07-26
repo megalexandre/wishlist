@@ -1,6 +1,8 @@
 package wishlist.domain.entity;
 
 import java.util.Collection;
+import java.util.Collections;
+import wishlist.domain.exception.MaximumProductLimitExceeded;
 import static java.util.UUID.randomUUID;
 
 public class CommonWishlist implements Wishlist {
@@ -17,6 +19,14 @@ public class CommonWishlist implements Wishlist {
         this.id = builder.getId();
         this.customer = builder.getCustomer();
         this.products = builder.getProducts();
+
+        if(products == null){
+            products = Collections.emptyList();
+        }
+
+        if(products.size()> builder.getMaximumProductLimit()){
+            throw new MaximumProductLimitExceeded("maximum product limit exceeded");
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package wishlist.application.endpoint.list_products_by_customer;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import wishlist.domain.entity.Wishlist;
 import wishlist.domain.entity.WishlistFactory;
@@ -10,7 +11,6 @@ import wishlist.domain.usecases.SearchWishlistUseCase;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -58,7 +58,7 @@ class ListWishlistProductsByCustomerEndpointTest {
 
         assertNotNull(response);
         assertEquals(NOT_FOUND, response.getStatusCode());
-        assertNull(requireNonNull(response.getBody()).products());
+        Assertions.assertThat(requireNonNull(response.getBody()).products()).isEmpty();
     }
 
 }

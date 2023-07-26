@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import wishlist.domain.exception.MaximumProductLimitExceeded;
 
 @Component
 public class WishlistFactory {
@@ -44,11 +43,6 @@ public class WishlistFactory {
         }
 
         public Builder setProducts(Collection<String> products) {
-
-            if(products.size() > maximumProductLimit){
-                throw new MaximumProductLimitExceeded("maximum product limit exceeded");
-            }
-
             this.products = products;
             return this;
         }
@@ -59,13 +53,10 @@ public class WishlistFactory {
                 products = new ArrayList<>();
             }
 
-            if(this.products.size() + 1 > maximumProductLimit){
-                throw new MaximumProductLimitExceeded("maximum product limit exceeded");
-            }
-
             this.products.add(product);
             return this;
         }
+
 
         public Wishlist build(){
             return new CommonWishlist(this);
@@ -81,6 +72,10 @@ public class WishlistFactory {
 
         public Collection<String> getProducts() {
             return products;
+        }
+
+        public int getMaximumProductLimit() {
+            return maximumProductLimit;
         }
     }
 

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wishlist.application.presenter.addwishlist.AddWishListPresenter;
-import wishlist.application.presenter.addwishlist.AddWishlistPresenterResponse;
 import wishlist.domain.entity.WishlistFactory;
 import wishlist.domain.usecases.SaveWishlistUseCase;
+import static wishlist.application.presenter.addwishlist.AddWishlistPresenterResponse.fromWishList;
 
 @RestController
 @RequestMapping("wishlist")
@@ -34,7 +34,7 @@ public class AddWishlistEndpoint {
             .setProduct(request.getProduct())
         .build();
 
-        return ResponseEntity.ok(AddWishlistPresenterResponse.fromWishList(useCase.execute(wishlist)));
+        return ResponseEntity.ok(fromWishList(useCase.execute(wishlist)));
     }
 
 }

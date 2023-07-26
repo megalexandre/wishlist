@@ -2,7 +2,7 @@
 
 Descrição do Projeto
 
-## _Projeto com arquitetura limpa escrito com java e springboot para manipular a lista de desejos do cliente_
+> _Projeto Lista de desejos do cliente_
 
 Funcionalidades Principais:
 - Adicionar um produto na Wishlist do cliente;
@@ -10,8 +10,8 @@ Funcionalidades Principais:
 - Consultar todos os produtos da Wishlist do cliente;
 - Consultar se um determinado produto está na Wishlist do cliente;
 
-...
-Tecnologias Utilizadas
+---------------------------------
+Tecnologias Utilizadas:
 
 Java 17
 Spring Boot 3+
@@ -30,11 +30,16 @@ build:
 ./gradlew clean build
 
 Avisos:
-é necessario iniciar o banco de dados antes de iniciar o projeto
-doker-compose up
-...
-
+antes de iniciar o projeto faça:
+**doker-compose up**
 ----------------------------
+###### Documentação
+
+A documentação reativa do swagger-ui está disponivel em:
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
 ###### Endpoints da API
 
 # Listar
